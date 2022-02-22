@@ -239,57 +239,45 @@ void add_stock()
 	time_t t;
 	time(&t);	
 	int amount,i,wish;
-	struct detail stock[amount];
+	struct detail stock;
 	
-	FILE *add_stock; 
-	add_stock= fopen("stock.txt","a+");
-	
-	printf("==========================================================================");
-  	printf("\n\t\t\tEnter Stock's Detail");
-  	printf("\n\t\t\t%s",ctime(&t));
-  	printf("==========================================================================");	
-	printf("\nHow many stocks to add: ");
-	scanf("%d",&amount);
-	printf("\n");
-	system("cls");
-	
-	
-	for(i=0;i<amount;i++)
-	{
-		printf("==========================================================================");
-  		printf("\n\t\t\tEnter Stock's Detail");
-  		printf("\n\t\t\t%s",ctime(&t));
-  		printf("==========================================================================");	
-		fflush(stdin);
-		
-		printf("\nEnter stock %d's brand\t\t: ",(i+1));
-		gets(stock[i].brand);
-		
-		printf("Enter stock %d's name\t\t: ",(i+1));
-		gets(stock[i].name);
-		
-		printf("Enter stock %d's code\t\t: ",(i+1));
-		gets(stock[i].code);
-		
-		printf("Enter stock %d's quantity\t: ",(i+1));
-		scanf("%d",&stock[i].qty);
-		
-		printf("Enter stock %d's price\t\t: RM ",(i+1));
-		scanf("%f",&stock[i].price);
-		
-		printf("\n\n");
-		
-		fprintf(add_stock,"%s %s %s %d %.2f\n",stock[i].brand,stock[i].name,stock[i].code,stock[i].qty,stock[i].price);
+	do{
 		system("cls");
-	}
-	fclose(add_stock);
-	fflush(stdin);
-	printf("==========================================================================");
-  	printf("\n\t\t\tEnter Stock's Detail");
-  	printf("\n\t\t\t%s",ctime(&t));
-  	printf("==========================================================================");	
-	printf("\nEnter (1) to view current stock or (0) to exit to main menu: ");
-	scanf("%d",&wish);
+		FILE *add_stock; 
+		add_stock= fopen("stock.txt","a+");
+		
+		printf("==========================================================================");
+	  	printf("\n\t\t\tEnter Stock's Detail");
+	  	printf("\n\t\t\t%s",ctime(&t));
+	  	printf("==========================================================================");	
+		fflush(stdin);
+		printf("\nEnter stock's brand\t\t: ");
+		gets(stock.brand);
+		
+		printf("Enter stock's name\t\t: ");
+		gets(stock.name);
+		
+		printf("Enter stock's code\t\t: ");
+		gets(stock.code);
+		
+		printf("Enter stock's quantity\t\t: ");
+		scanf("%d",&stock.qty);
+		
+		printf("Enter stock's price\t\t: RM ");
+		scanf("%f",&stock.price);
+		printf("\n\n");
+			
+		fprintf(add_stock,"%s %s %s %d %.2f\n",stock.brand,stock.name,stock.code,stock.qty,stock.price);
+		system("cls");
+		fclose(add_stock);
+		fflush(stdin);
+		printf("==========================================================================");
+	  	printf("\n\t\t\tEnter Stock's Detail");
+	  	printf("\n\t\t\t%s",ctime(&t));
+	  	printf("==========================================================================");	
+		printf("\nEnter (1) to view current stock or (0) to add more stock: ");
+		scanf("%d",&wish);
+	}while(wish==0);
 	
 	if(wish==1)
 	{
@@ -297,15 +285,10 @@ void add_stock()
 		view_stock();
 
 	}
-	else if(wish==0)
-	{
-		system("cls");
-		stock_menu();
-	}
 	else
 	{
 		system("cls");
-		main();
+		stock_menu();
 	}
 }
 
@@ -795,9 +778,6 @@ void menu()
           "\t\t7. View Stock With Lowest and Highest Quantity\n"
 		  "\t\t8. Log out\n");
   	printf("==========================================================================\n");
-  	printf("Important Note: Employees, please refrain from using more than one word");
-	printf("\nin order to keep our program short and efficient.");
-  	printf("\n==========================================================================\n");
 }
 
 void stock_menu()
